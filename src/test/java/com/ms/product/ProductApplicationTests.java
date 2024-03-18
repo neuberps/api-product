@@ -8,7 +8,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 public class ProductApplicationTests {
 
 	@Test
-	void contextLoads() {
+	public void contextLoads() {
 	}
 
 }
