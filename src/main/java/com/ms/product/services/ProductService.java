@@ -7,6 +7,7 @@ import com.ms.product.model.Product;
 import com.ms.product.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -27,6 +28,7 @@ public class ProductService {
         return list.stream().map(ProductDTO::new).toList();
     }
 
+    @Transactional
     public ProductDTO create(ProductDTO productDTO) throws ServiceException {
         Product entity = new Product(productDTO);
         entity.setRegistryUser(productDTO.getRegistryUser());
@@ -46,6 +48,8 @@ public class ProductService {
                 .map(ProductDTO::new)
                 .orElseThrow(() -> new ProductNofFoundException("Product not found with name: " + name));
     }
+
+    @Transactional
     public ProductDTO update(String id, ProductDTO productDTO) throws ServiceException {
         Optional<Product> optionalProduct = repository.findById(id);
         if (optionalProduct.isPresent()) {
