@@ -29,7 +29,7 @@ public class ProductDTO implements Serializable {
     @NotNull
     private BigDecimal price;
     @NotBlank
-    private String category;
+    private String idCategory;
     @NotBlank
     private String brand;
     @NotBlank
@@ -38,6 +38,13 @@ public class ProductDTO implements Serializable {
     private String supplier;
     @NotBlank
     private String registryUser;
+    @NotBlank
+    private String image;
+
+    private Integer quantity;
+
+
+
 
     private String created;
     private String updated;

@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 
 @Service
@@ -33,6 +34,7 @@ public class ProductService {
         Product entity = new Product(productDTO);
         entity.setRegistryUser(productDTO.getRegistryUser());
         entity.setCreated(LocalDateTime.now().toString());
+        entity.setQuantity(1);
         repository.save(entity);
         return new ProductDTO(entity);
     }
@@ -49,6 +51,13 @@ public class ProductService {
                 .orElseThrow(() -> new ProductNofFoundException("Product not found with name: " + name));
     }
 
+    public List<ProductDTO> findByIdCategory(String idCategory) throws ServiceException {
+        List<ProductDTO> productDTOList = repository.findByIdCategory(idCategory)
+                .stream().map(ProductDTO::new)
+                .collect(Collectors.toList());
+        return productDTOList;
+    }
+
     @Transactional
     public ProductDTO update(String id, ProductDTO productDTO) throws ServiceException {
         Optional<Product> optionalProduct = repository.findById(id);
@@ -57,12 +66,13 @@ public class ProductService {
             entity.setName(productDTO.getName());
             entity.setDescription(productDTO.getDescription());
             entity.setPrice(productDTO.getPrice());
-            entity.setCategory(productDTO.getCategory());
+            entity.setIdCategory(productDTO.getIdCategory());
             entity.setBrand(productDTO.getBrand());
             entity.setStock(productDTO.getStock());
             entity.setSupplier(productDTO.getSupplier());
             entity.setRegistryUser(productDTO.getRegistryUser());
             entity.setUpdated(LocalDateTime.now().toString());
+            entity.setQuantity(1);
 
 
             repository.save(entity);
