@@ -22,13 +22,18 @@ public class Product implements Serializable {
     private String name;
     private String description;
     private BigDecimal price;
-    private String category;
+    private String idCategory;
     private String brand;
     private String stock;
     private String supplier;
     private String created;
     private String updated;
     private String registryUser;
+    private String image;
+    private Integer quantity;
+
+
+
 
     /*
     //Dependeria de que tipo de e-commerce ou produto estaria lidando, mas poderia ter outros atributos, como:

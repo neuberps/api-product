@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@CrossOrigin
 @RestController
 @RequestMapping("/api/products")
 public class ProductController {
@@ -65,6 +66,19 @@ public class ProductController {
             } else {
                 return ResponseEntity.notFound().build();
             }
+        } catch (ServiceException e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+    }
+
+    @GetMapping(value="/findByIdCategory/{idCategory}")
+    public ResponseEntity<List<ProductDTO>>  findByIdCategory(@PathVariable String idCategory) {
+        try {
+            List<ProductDTO> products = service.findByIdCategory(idCategory);
+            if (products.isEmpty()) {
+                return ResponseEntity.noContent().build();
+            }
+            return ResponseEntity.ok(products);
         } catch (ServiceException e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
