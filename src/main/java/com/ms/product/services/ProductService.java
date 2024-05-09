@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
@@ -57,6 +58,14 @@ public class ProductService {
                 .collect(Collectors.toList());
         return productDTOList;
     }
+
+    public List<ProductDTO> findByDiscount(String lesser, String greater) throws ServiceException {
+        List<ProductDTO> productDTOList = repository.findByDiscountBetween(lesser, greater)
+                .stream().map(ProductDTO::new)
+                .collect(Collectors.toList());
+        return productDTOList;
+    }
+
 
     @Transactional
     public ProductDTO update(String id, ProductDTO productDTO) throws ServiceException {

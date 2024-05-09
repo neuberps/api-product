@@ -10,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @CrossOrigin
@@ -75,6 +76,19 @@ public class ProductController {
     public ResponseEntity<List<ProductDTO>>  findByIdCategory(@PathVariable String idCategory) {
         try {
             List<ProductDTO> products = service.findByIdCategory(idCategory);
+            if (products.isEmpty()) {
+                return ResponseEntity.noContent().build();
+            }
+            return ResponseEntity.ok(products);
+        } catch (ServiceException e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+    }
+
+    @GetMapping(value="/findByDiscount/")
+    public ResponseEntity<List<ProductDTO>>  findByDiscount() {
+        try {
+            List<ProductDTO> products = service.findByDiscount("1","99");
             if (products.isEmpty()) {
                 return ResponseEntity.noContent().build();
             }

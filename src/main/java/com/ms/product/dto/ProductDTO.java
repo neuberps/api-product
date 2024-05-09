@@ -40,8 +40,12 @@ public class ProductDTO implements Serializable {
     private String registryUser;
     @NotBlank
     private String image;
+    @NotBlank
+    private BigDecimal discount;
 
     private Integer quantity;
+
+
 
 
 
